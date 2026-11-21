@@ -1,0 +1,166 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=teal!70!black,
+    citecolor=purple!70!black
+}
+
+\setlist[itemize]{noitemsep, topsep=2pt}
+\setlist[enumerate]{noitemsep, topsep=2pt}
+
+\title{\textbf{\Large Reporte Ejecutivo: Estudio de Estrellas RR Lyrae en Rubin DP1}\\
+\large Síntesis Estructurada de Ngeow \& Bhardwaj (2026, \textit{The Astronomical Journal}, 172:3)}
+\author{\textbf{Proyecto Vera C. Rubin} \quad|\quad Resumen Técnico}
+\date{Noviembre 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent Este documento condensa los puntos metodológicos, observacionales y teóricos más relevantes del artículo \textit{“Exploring RR Lyrae Variable Stars in the Vera C. Rubin Observatory Data Preview 1”} (Ngeow \& Bhardwaj, 2026). El objetivo es disponer de una referencia rápida y organizada de cada sección del artículo, detallando los productos de datos empleados, la estrategia de ajuste por plantillas, los resultados de metalicidad y módulos de distancia, y las implicaciones físicas para el sondeo LSST.
+\end{abstract}
+
+\vspace{0.5em}
+
+\section*{Ficha Bibliográfica y Parámetros del Trabajo}
+\begin{itemize}
+    \item \textbf{Título:} \textit{Exploring RR Lyrae Variable Stars in the Vera C. Rubin Observatory Data Preview 1}
+    \item \textbf{Autores:} Chow-Choong Ngeow (National Central University, Taiwán) y Anupam Bhardwaj (IUCAA, India).
+    \item \textbf{Publicación:} \textit{The Astronomical Journal}, 172:3 (11pp), Julio 2026. DOI: \texttt{10.3847/1538-3881/ae6807}.
+    \item \textbf{Conjunto de datos evaluado:} Data Preview 1 (DP1) del Observatorio Vera C. Rubin (ComCam, 48 noches a finales de 2024, filtros $u, g, r, i, z, y$).
+    \item \textbf{Modelos teóricos de comparación:} Modelos de pulsación hidrodinámica no lineal de Marconi et al. (2022) adaptados para los filtros de LSST.
+\end{itemize}
+
+\vspace{0.5em}
+\hrule
+\vspace{0.8em}
+
+\section{Sección 1: Introducción y Motivación}
+\begin{itemize}
+    \item \textbf{Contexto observacional de DP1:} Rubin DP1 se liberó el 30 de junio de 2025 con datos de comisionamiento de la LSSTComCam (mosaico $3\times3$ CCDs, campo $\sim1.3^\circ \times 1.3^\circ$) cubriendo series temporales en 7 campos preseleccionados.
+    \item \textbf{Importancia astrofísica de las RR Lyrae:} Estrellas pulsantes viejas (Población II) de la Rama Horizontal (HB). Son candelas estándar de distancia primarias y trazadoras clave de la cinemática/química del halo de la Vía Láctea y galaxias enanas satélites.
+    \item \textbf{Limitaciones de estudios previos:} Trabajos iniciales (Malanchev et al. 2025; Choi et al. 2025) solo recuperaron de forma exploratoria un puñado de variables conocidas en DP1 sin comparaciones teóricas rigurosas.
+    \item \textbf{Objetivo central del paper:} Realizar un análisis sistemático y cuantitativo de todas las RR Lyrae conocidas en DP1, contrastando sus curvas de luz reales por primera vez con los modelos teóricos para filtros LSST de Marconi et al. (2022).
+\end{itemize}
+
+\section{Sección 2: Muestra de RR Lyrae Conocidas en Campos DP1}
+\begin{itemize}
+    \item \textbf{Plataforma LSDB y Cruce Catálogo (radio de búsqueda $1''$):}
+    \begin{itemize}
+        \item Se cruzaron las posiciones de DP1 con la base de datos de estrellas variables VSX (AAVSO) y catálogos de la literatura.
+        \item Se evaluaron dos catálogos principales de DP1: \texttt{Object} (imágenes co-sumadas directas) y \texttt{DiaObject} (análisis por diferencia de imágenes, DIA).
+    \end{itemize}
+    \item \textbf{Comportamiento según la densidad estelar:}
+    \begin{itemize}
+        \item \textit{Campos poco poblados (EDFS, Rubin95, Rubin38):} Recuperación idéntica en \texttt{Object} y \texttt{DiaObject}.
+        \item \textit{Campos abarrotados (47Tuc y Fornax):} \texttt{DiaObject} recupera significativamente más estrellas porque la resta de imágenes elimina el fondo estelar saturado y el efecto de mezcla (\textit{blending}).
+        \item \textit{Aclaración sobre 47Tuc:} Las RR Lyrae observadas en esta línea de visión no pertenecen al cúmulo globular 47 Tuc, sino a la \textbf{Pequeña Nube de Magallanes (SMC)} de fondo.
+        \item \textit{Campo ECDFS:} Pese a tener la mayor cadencia (21 noches), no posee ninguna RR Lyrae conocida.
+    \end{itemize}
+    \item \textbf{Incompletitud en Fornax y Muestra DES:} VSX arrojó solo 3 a 10 estrellas en Fornax. Al cruzar con el catálogo de Stringer et al. (2021) del \textit{Dark Energy Survey} (DES), la muestra aumentó a \textbf{393 en \texttt{Object} y 617 en \texttt{DiaObject}}.
+    \item \textbf{Periodos y Extinción adoptados:} Se adoptaron los periodos ya conocidos de la literatura (no se ajustaron periodos con DP1). La extinción $E(B-V)$ se tomó de los mapas de Schlegel et al. (1998) y coeficientes $R_\lambda$ de Schlafly \& Finkbeiner (2011) ($R_V = 3.1$).
+\end{itemize}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Resumen de la muestra de RR Lyrae identificadas en DP1 (Tabla 1 del artículo)}
+\begin{tabularx}{\textwidth}{lcccccX}
+\toprule
+\textbf{Campo} & \textbf{Épocas} & $N_{OBJ}$ & $N_{DIA}$ & $N_{Final}$ (OBJ / DIA) & \textbf{Tipo de Muestra / Población} \\
+\midrule
+47Tuc    & 4  & 25  & 62  & 1 / 36   & VSX (Población de la SMC de fondo) \\
+ECDFS    & 21 & 0   & 0   & 0 / 0    & VSX (Sin RR Lyrae conocidas) \\
+EDFS     & 9  & 1   & 1   & 1 / 1    & VSX (1 RRab de prueba Euclid/Rubin) \\
+Fornax   & 2  & 3   & 10  & 0 / 7    & VSX (Incompleto) \\
+Rubin95  & 10 & 2   & 2   & 2 / 2    & VSX (1 RRab y 1 RRc bien muestreadas) \\
+Rubin38  & 5  & 4   & 4   & 1 / 1    & VSX (1 RRab con calidad suficiente) \\
+Seagull  & 4  & 1   & 1   & 0 / 0    & VSX (Descartado por alta dispersión) \\
+\textbf{Fornax (DES)} & 2 & \textbf{393} & \textbf{617} & \textbf{146 / 517} & Stringer et al. (2021) / DES \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Sección 3: Curvas de Luz y Ajuste de Plantillas}
+\begin{itemize}
+    \item \textbf{Selección de fotometría forzada:} Se seleccionó \texttt{diaObjectForcedSource} como producto primario de DIA (siguiendo a Choi et al. 2025), ya que mide flujo forzado en todas las visitas (a diferencia de \texttt{diaSource}, que pierde épocas cuando la estrella está cerca del mínimo de brillo).
+    \item \textbf{Filtrado de calidad estricto:}
+    \begin{itemize}
+        \item Se descartaron puntos con banderas: \texttt{pixelFlags\_nodata}, \texttt{bad}, \texttt{cr}, \texttt{edge}, \texttt{saturated} o \texttt{psfFlux\_flag}.
+        \item Solo se conservaron curvas con $>5$ puntos válidos tras remover banderas.
+        \item Se filtraron curvas con dispersión intra-época anómala (descartando así la banda $g$ en Fornax, la banda $y$ en 47Tuc y el campo Seagull).
+    \end{itemize}
+    \item \textbf{Ajuste de plantillas (Braga et al. 2024):}
+    \begin{itemize}
+        \item Ante la escasez de datos ($6$ a $\sim70$ puntos), los ajustes de Fourier libres divergen; se usó el código de plantillas \texttt{RRL\_lcvtemplate\_griz\_LSST}.
+        \item El periodo $P$ es obligatorio. La época de fase máxima ($t_0$) se fijó en la banda $r$ y se ancló a los demás filtros.
+        \item \textit{Aproximaciones:} Plantilla de $g$ para la banda $u$; plantilla de $z$ para la banda $y$. Para RRc no hay plantillas en banda $z$, por lo que no se ajustaron las bandas $z$ ni $y$ en RRc.
+    \end{itemize}
+    \item \textbf{Agrupamiento de fase (\textit{Phase Clumping}):} Cada época de DP1 consistió en 5 a 20 visitas sucesivas de 30 s tomadas en pocas horas. Al desfasar con el periodo ($P \sim 0.2 - 0.7$ d), las observaciones se concentran en racimos muy apretados, dejando valles o crestas desprovistos de datos.
+\end{itemize}
+
+\section{Sección 4: Campos Limpios y Poco Poblados (EDFS, Rubin95, Rubin38)}
+Se analizaron en detalle las 4 estrellas con mejor cobertura fotométrica (Tabla 2 del artículo):
+\begin{itemize}
+    \item \textbf{Efecto Blazhko en EDFS:} Para la estrella \texttt{SSS J035520.3-484728} (RRab, $P = 0.5654$ d), la plantilla en banda $r$ no ajustaba bien la dispersión máxima. Al contrastar con la banda $G$ de Gaia DR3, se confirmó que es una RR Lyrae modulada por efecto Blazhko.
+    \item \textbf{Metalicidad fotométrica $[\text{Fe/H}]_{gri}$ (Marconi et al. 2022):}
+    \begin{equation*}
+        [\text{Fe/H}]_{gri} = \alpha(g - r)_0 + \beta(r - i)_0 + \gamma \quad (\sigma = 0.31\text{ dex})
+    \end{equation*}
+    \begin{itemize}
+        \item Para EDFS y las dos estrellas de Rubin95: $[\text{Fe/H}]_{gri} \sim -1.8$ dex, en excelente concordancia con trazas teóricas de baja metalicidad.
+        \item \textbf{Alerta en Rubin38:} Un desfase de solo $0.14$ mag en la magnitud media de banda $i$ provocó valores espurios de $[\text{Fe/H}] = -3.59$ dex (\texttt{Object}) y $+1.41$ dex (\texttt{DiaObject}). Demuestra que la metalicidad fotométrica es \textbf{extremadamente sensible} al error fotométrico en cualquier banda.
+    \end{itemize}
+    \item \textbf{Módulos de Distancia ($\mu$) y el Índice de Wesenheit ($W_{gr}$):}
+    \begin{equation*}
+        W = r - 2.796(g - r)
+    \end{equation*}
+    $W$ es independiente del enrojecimiento por construcción y su término de metalicidad es despreciable ($\sim 0.05\text{ mag/dex}$). Los valores de $\mu_W$ coinciden perfectamente entre \texttt{Object} y \texttt{DiaObject} y con la literatura (ej. EDFS: $\mu_W = 17.22$ vs $\mu_{lit} = 17.19$).
+    \item \textbf{Amplitudes en el Diagrama de Bailey (Figura 6):}
+    \begin{itemize}
+        \item Las amplitudes observadas coinciden con los \textbf{modelos ZAHB} (Rama Horizontal de Edad Cero).
+        \item Son \textbf{totalmente inconsistentes con los modelos evolucionados} (\textit{evolved models}), los cuales predicen periodos desplazados y amplitudes erróneas.
+    \end{itemize}
+\end{itemize}
+
+\section{Sección 5: Campos Abarrotados (47Tuc y Fornax)}
+\begin{itemize}
+    \item \textbf{Técnica de Razones Fijas de Amplitud:} Al disponer solo de 2 noches (Fornax) y 4 noches (47Tuc), se fijaron las amplitudes de $g$ e $i$ respecto a $r$ según las razones de Braga et al. (2024): $A_g/A_r$ y $A_i/A_r$.
+    \item \textbf{47Tuc (SMC de fondo):} 34 RR Lyrae recuperadas en \texttt{diaObjectForcedSource} frente a solo 1 en \texttt{Object}. Nueve estrellas con datos $gri$ permitieron estimar $[\text{Fe/H}]_{gri}$, coincidiendo con la literatura de Li et al. (2023) cuando la cobertura de fase no fue deficiente.
+    \item \textbf{Fornax (108 estrellas con fotometría simultánea):} La diferencia media entre \texttt{Object} y \texttt{DiaObject} fue de solo $\sim0.01$ mag en $r$ y $\sim0.03$ mag en $i$, demostrando la consistencia global del pipeline de Rubin.
+    \item \textbf{Comparación de Módulos de Distancia:}
+    \begin{itemize}
+        \item La relación PWZ de Wesenheit ($W_{gr}$) reproduce la distancia de la SMC en 47Tuc con una desviación de apenas $\Delta\mu = 0.05$ mag.
+        \item En cambio, las relaciones teóricas PLZ mono-banda ($\mu_r$ y $\mu_i$) arrojan distancias \textbf{sistemáticamente sobreestimadas en $+0.25$ a $+0.30$ mag} tanto en 47Tuc como en Fornax ($\Delta\mu_r = +0.28 \pm 0.22$, $\Delta\mu_i = +0.31 \pm 0.21$).
+    \end{itemize}
+\end{itemize}
+
+\section{Sección 6: Discusión, Conclusiones y Recomendaciones}
+\begin{enumerate}
+    \item \textbf{Uso conjunto de productos fotométricos:} Aunque \texttt{diaObjectForcedSource} es prioritario en variables, los autores recomiendan fuertemente contrastarlo con \texttt{objectForcedSource} en series temporales tempranas como herramienta para detectar curvas defectuosas o ajustes divergentes.
+    \item \textbf{Superioridad del Índice de Wesenheit ($W_{gr}$):}
+    Al comparar todos los módulos de distancia $\mu_W$ con la literatura (Figura 11 del paper), el acuerdo es sobresaliente:
+    \begin{equation*}
+        \Delta\mu_W = \mu_W(\text{DP1}) - \mu_{lit} = -0.01 \pm 0.36\text{ mag}
+    \end{equation*}
+    Se recomienda formalmente emplear la relación PWZ en $W_{gr}$ para futuros trabajos de escala de distancias en LSST.
+    \item \textbf{Causa del sesgo sistemático en relaciones PLZ mono-banda:}
+    El exceso de $+0.25$ a $+0.30$ mag en las relaciones PLZ se debe a que Marconi et al. (2022) incluyeron \textit{modelos evolucionados} al calibrar sus ajustes teóricos. Los modelos evolucionados tienen luminosidades intrínsecas $0.2\text{ dex}$ más brillantes que las ZAHB, inflando artificialmente el módulo de distancia ($\mu = m - M$).
+    \item \textbf{Perspectiva futura:} Es prioritario que los teóricos recalibren las relaciones PLZ para LSST excluyendo modelos evolucionados incompatibles con las amplitudes observadas. Se sugiere calibrar empíricamente con cúmulos globulares monometálicos observados por Rubin.
+\end{enumerate}
+
+\end{document}
