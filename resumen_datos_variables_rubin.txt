@@ -9,7 +9,7 @@ Total de objetos candidatos variables procesados: 1,920
 
 Subtipo de Variabilidad                | N Estrellas  | Porcentaje
 -----------------------------------------------------------------
-Rubin_Galactic_Variable_Candidate      | 1,760        |  91.67%
+Others_Rubin.                          | 1,760        |  91.67%
 Eclipsing_Binary                       | 78           |   4.06%
 RR_Lyrae                               | 41           |   2.14%
 Rotational_Variable                    | 21           |   1.09%
